@@ -58,7 +58,7 @@ public class CatalogActivity extends AppCompatActivity {
 
         mDbHelper= new PetDbHelper(this);
 
-        displayDatabaseInfo();
+
 
     }
     private void displayDatabaseInfo() {
@@ -82,6 +82,12 @@ public class CatalogActivity extends AppCompatActivity {
             // resources and makes it invalid.
             cursor.close();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        displayDatabaseInfo();
     }
 
     @Override
