@@ -33,6 +33,8 @@ import com.example.android.pets.data.PetContract;
 import com.example.android.pets.data.PetDbHelper;
 import com.example.android.pets.data.PetContract.PetEntry;
 
+import org.w3c.dom.Text;
+
 /**
  * Displays list of pets that were entered and stored in the app.
  */
@@ -85,12 +87,35 @@ public class CatalogActivity extends AppCompatActivity {
                 null,
                 null);
 
+        TextView textView=(TextView)findViewById(R.id.text_view_pet);
 
         try {
             // Display the number of rows in the Cursor (which reflects the number of rows in the
             // pets table in the database).
-            TextView displayView = (TextView) findViewById(R.id.text_view_pet);
-            displayView.setText("Number of rows in pets database table: " + cursor.getCount());
+
+            textView.setText("Number of rows in pets database table: " + cursor.getCount());
+            textView.append(PetEntry._ID+"-"+PetEntry.COLUMN_PET_NAME+
+                            "-"+PetEntry.COLUMN_PET_BREED+"-"+PetEntry.COLUMN_PET_GENDER+
+                            "-"+PetEntry.COLUMN_PET_WEIGHT+"\n\n");
+
+            int idColumnIndex=cursor.getColumnIndex(PetEntry._ID);
+            int nameColumnIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_NAME);
+            int weightColumnIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_WEIGHT);
+            int genderColumnIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_GENDER);
+            int breedColumnIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_BREED);
+
+            while(cursor.moveToNext()){
+
+                int currentID= cursor.getInt(idColumnIndex);
+                String currentName = cursor.getString(nameColumnIndex);
+                int currentWeight= cursor.getInt(weightColumnIndex);
+                int currentGender=cursor.getInt(genderColumnIndex);
+                String currentBreed= cursor.getString(breedColumnIndex);
+
+                textView.append("\n"+currentID+"-"+currentName+"-"+currentBreed+"-"
+                        +currentGender+"-"+currentWeight);
+            }
+
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
             // resources and makes it invalid.
