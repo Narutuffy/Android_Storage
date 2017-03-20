@@ -66,10 +66,7 @@ public class CatalogActivity extends AppCompatActivity {
     private void displayDatabaseInfo() {
         // To access our database, we instantiate our subclass of SQLiteOpenHelper
         // and pass the context, which is the current activity.
-        PetDbHelper mDbHelper = new PetDbHelper(this);
 
-        // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection={
                 PetEntry._ID,
@@ -78,11 +75,9 @@ public class CatalogActivity extends AppCompatActivity {
                 PetEntry.COLUMN_PET_GENDER,
                 PetEntry.COLUMN_PET_BREED
         };
-
-        Cursor cursor=db.query(PetEntry.TABLE_NAME,
+        //content resolver points to the right content provider with the help of inserted URI
+        Cursor cursor=getContentResolver().query(PetEntry.CONTENT_URI,
                 projection,
-                null,
-                null,
                 null,
                 null,
                 null);
