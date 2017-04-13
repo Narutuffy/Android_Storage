@@ -29,6 +29,8 @@ public class PetProvider extends ContentProvider {
 
     static{
 
+        sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_PETS,PETS);
+        sUriMatcher.addURI(PetContract.CONTENT_AUTHORITY,PetContract.PATH_PETS+"/#",PET_ID);
 
 
     }
@@ -216,6 +218,8 @@ public class PetProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+
 
         final int match = sUriMatcher.match(uri);
         switch (match) {
