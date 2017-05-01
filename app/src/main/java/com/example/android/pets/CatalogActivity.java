@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.android.pets.data.PetContract;
@@ -83,40 +84,12 @@ public class CatalogActivity extends AppCompatActivity {
                 null,
                 null);
 
-        TextView textView=(TextView)findViewById(R.id.text_view_pet);
+        ListView petListView=(ListView)findViewById(R.id.list_view);
 
-        try {
-            // Display the number of rows in the Cursor (which reflects the number of rows in the
-            // pets table in the database).
+        PetCursorAdapter petCursorAdapter= new PetCursorAdapter(this,cursor);
 
-            textView.setText("Number of rows in pets database table: " + cursor.getCount());
-            textView.append(PetEntry._ID+"-"+PetEntry.COLUMN_PET_NAME+
-                            "-"+PetEntry.COLUMN_PET_BREED+"-"+PetEntry.COLUMN_PET_GENDER+
-                            "-"+PetEntry.COLUMN_PET_WEIGHT+"\n\n");
+        petListView.setAdapter(petCursorAdapter);
 
-            int idColumnIndex=cursor.getColumnIndex(PetEntry._ID);
-            int nameColumnIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_NAME);
-            int weightColumnIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_WEIGHT);
-            int genderColumnIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_GENDER);
-            int breedColumnIndex=cursor.getColumnIndex(PetEntry.COLUMN_PET_BREED);
-
-            while(cursor.moveToNext()){
-
-                int currentID= cursor.getInt(idColumnIndex);
-                String currentName = cursor.getString(nameColumnIndex);
-                int currentWeight= cursor.getInt(weightColumnIndex);
-                int currentGender=cursor.getInt(genderColumnIndex);
-                String currentBreed= cursor.getString(breedColumnIndex);
-
-                textView.append("\n"+currentID+"-"+currentName+"-"+currentBreed+"-"
-                        +currentGender+"-"+currentWeight);
-            }
-
-        } finally {
-            // Always close the cursor when you're done reading from it. This releases all its
-            // resources and makes it invalid.
-            cursor.close();
-        }
     }
 
     @Override
