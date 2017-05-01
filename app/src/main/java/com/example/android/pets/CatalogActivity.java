@@ -58,8 +58,10 @@ public class CatalogActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+            ListView petListView=(ListView)findViewById(R.id.list_view);
 
-
+        View emptyView = findViewById(R.id.empty_view);
+        petListView.setEmptyView(emptyView);
         mDbHelper= new PetDbHelper(this);
 
 
@@ -89,6 +91,9 @@ public class CatalogActivity extends AppCompatActivity {
         PetCursorAdapter petCursorAdapter= new PetCursorAdapter(this,cursor);
 
         petListView.setAdapter(petCursorAdapter);
+
+        View emptyView = findViewById(R.id.empty_view);
+        petListView.setEmptyView(emptyView);
 
     }
 
@@ -126,11 +131,10 @@ public class CatalogActivity extends AppCompatActivity {
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 insertPet();
-                displayDatabaseInfo();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
-                // Do nothing for now
+               int rowsDeleted= getContentResolver().delete(PetEntry.CONTENT_URI,null,null);
                 return true;
         }
         return super.onOptionsItemSelected(item);

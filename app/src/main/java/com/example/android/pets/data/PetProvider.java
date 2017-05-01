@@ -124,7 +124,7 @@ public class PetProvider extends ContentProvider {
         if (name == null) {
             throw new IllegalArgumentException("Pet requires a name");
         }
-        Integer gender = values.getAsInteger(PetEntry.COLUMN_PET_BREED);
+        Integer gender = values.getAsInteger(PetEntry.COLUMN_PET_GENDER);
         if (gender == null || !PetEntry.isValidGender(gender)) {
             throw new IllegalArgumentException("Pet requires valid gender");
         }
