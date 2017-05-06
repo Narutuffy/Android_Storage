@@ -38,6 +38,7 @@ import android.widget.ListView;
 
 import com.example.android.pets.data.PetContract.PetEntry;
 import com.example.android.pets.data.PetDbHelper;
+import com.example.android.pets.data.PetProvider;
 
 import org.w3c.dom.Text;
 
@@ -73,6 +74,21 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         mCursorAdapter=new PetCursorAdapter(this,null);
         petListView.setAdapter(mCursorAdapter);
+
+        petListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                Intent intent = new Intent(CatalogActivity.this, PetProvider.class);
+
+                Uri currentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI,id);
+                intent.setData(currentPetUri);
+
+                startActivity(intent);
+            }
+        });
+
+
 
         getLoaderManager().initLoader(PET_LOADER,null,this);
 
