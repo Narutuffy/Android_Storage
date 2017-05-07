@@ -71,7 +71,8 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         View emptyView = findViewById(R.id.empty_view);
         petListView.setEmptyView(emptyView);
         mDbHelper= new PetDbHelper(this);
-
+        //Set item up an Adapter to create a list item for each row of pet data in the cursor.
+        //There is no pet data yet(until) the loader finishes to fetch the data, hence null.o
         mCursorAdapter=new PetCursorAdapter(this,null);
         petListView.setAdapter(mCursorAdapter);
 
